@@ -1,0 +1,30 @@
+import requests
+
+def get_public_apis():
+    api_url = "http://20.244.56.144/train/register"             //John doe railway server api 
+    
+    try:
+        response = requests.get(api_url)
+        
+        # Check if the request was successful (status code 200)
+        if response.status_code == 200:
+            data = response.json()
+            return data['entries']                             // Assuming the 'entries' key contains the API data
+        else:
+            print(f"API request failed with status code: {response.status_code}")
+            return None
+    except requests.exceptions.RequestException as e:
+        print(f"API request error: {e}")
+        return None
+
+if _name_ == "_main_":
+    api_data = get_public_apis()
+    
+    if api_data:
+        for api in api_data:
+            print(f"API Name: {api['API']}")
+            print(f"Description: {api['Description']}")
+            print(f"Link: {api['Link']}")
+            print("API enabled")
+    else:
+        print("Failed to fetch API data.")
